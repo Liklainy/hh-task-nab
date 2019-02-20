@@ -1,34 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <parent>
-        <groupId>ru.hh.nab</groupId>
-        <artifactId>nuts-and-bolts-parent</artifactId>
-        <version>4.15.2-SNAPSHOT</version>
-        <relativePath>..</relativePath>
-    </parent>
 
-    <artifactId>nab-example</artifactId>
+    <groupId>ru.hh.school</groupId>
+    <artifactId>nab-checklist</artifactId>
     <packaging>jar</packaging>
+    <version>1.0.0</version>
 
-    <name>nuts'n'bolts example</name>
+    <name>checklist with nab</name>
 
     <dependencies>
         <dependency>
             <groupId>ru.hh.nab</groupId>
             <artifactId>nab-starter</artifactId>
-            <version>${project.version}</version>
+            <version>4.15.1</version>
         </dependency>
         <dependency>
             <groupId>ru.hh.nab</groupId>
             <artifactId>nab-testbase</artifactId>
-            <version>${project.version}</version>
+            <version>4.15.1</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
 
+    <repositories>
+        <repository>
+            <id>hh-public</id>
+            <name>hh public releases repository</name>
+            <url>http://m2.hh.ru/content/repositories/public-releases</url>
+        </repository>
+    </repositories>
+
     <build>
         <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>versions-maven-plugin</artifactId>
+                <version>2.5</version>
+                <configuration>
+                    <generateBackupPoms>false</generateBackupPoms>
+                </configuration>
+            </plugin>		
+	    <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.0</version>
+                <configuration>
+                    <release>11</release>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
@@ -73,6 +93,7 @@
                 <configuration>
                     <systemPropertyVariables>
                         <settingsDir>${basedir}/src/etc/nab-example</settingsDir>
+                        <argLine>--illegal-access=permit</argLine>
                     </systemPropertyVariables>
                 </configuration>
             </plugin>
