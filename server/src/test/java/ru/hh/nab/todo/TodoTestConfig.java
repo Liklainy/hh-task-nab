@@ -1,4 +1,4 @@
-package ru.hh.nab.example;
+package ru.hh.nab.todo;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -9,7 +9,7 @@ import ru.hh.nab.testbase.NabTestConfig;
 
 @Configuration
 @Import(NabTestConfig.class)
-public class ExampleTestConfig {
+public class TodoTestConfig {
 
   @Bean
   Function<String, String> serverPortAwareBean(String jettyBaseUrl) {

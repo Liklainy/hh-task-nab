@@ -8,7 +8,7 @@ target
 .idea
 .settings
 .project
-*/.classpath
+.classpath
 nb-configuration.xml
 dependency-reduced-pom.xml
 *.properties.dev

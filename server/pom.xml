@@ -3,11 +3,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>ru.hh.school</groupId>
-    <artifactId>nab-checklist</artifactId>
+    <artifactId>nab-todo</artifactId>
     <packaging>jar</packaging>
     <version>1.0.0</version>
 
-    <name>checklist with nab</name>
+    <name>todo with nab</name>
 
     <dependencies>
         <dependency>
@@ -64,10 +64,10 @@
                     <systemProperties>
                         <systemProperty>
                             <key>settingsDir</key>
-                            <value>src/etc/nab-example</value>
+                            <value>src/etc/nab-todo</value>
                         </systemProperty>
                     </systemProperties>
-                    <mainClass>ru.hh.nab.example.ExampleMain</mainClass>
+                    <mainClass>ru.hh.nab.todo.TodoMain</mainClass>
                 </configuration>
             </plugin>
 
@@ -92,12 +92,29 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <configuration>
                     <systemPropertyVariables>
-                        <settingsDir>${basedir}/src/etc/nab-example</settingsDir>
+                        <settingsDir>${basedir}/src/etc/nab-todo</settingsDir>
                         <argLine>--illegal-access=permit</argLine>
                     </systemPropertyVariables>
                 </configuration>
             </plugin>
         </plugins>
     </build>
+
+    <reporting>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-checkstyle-plugin</artifactId>
+          <version>3.0.0</version>
+          <reportSets>
+            <reportSet>
+              <reports>
+                <report>checkstyle</report>
+              </reports>
+            </reportSet>
+          </reportSets>
+        </plugin>
+      </plugins>
+    </reporting>
 
 </project>

@@ -1,4 +1,4 @@
-package ru.hh.nab.example;
+package ru.hh.nab.todo;
 
 import org.junit.Test;
 import org.springframework.test.context.ContextConfiguration;
@@ -9,8 +9,8 @@ import javax.ws.rs.core.Response;
 
 import static org.junit.Assert.assertEquals;
 
-@ContextConfiguration(classes = ExampleTestConfig.class)
-public class ExampleResourceTest extends NabTestBase {
+@ContextConfiguration(classes = TodoTestConfig.class)
+public class TodoResourceTest extends NabTestBase {
 
   @Test
   public void hello() {
@@ -32,6 +32,6 @@ public class ExampleResourceTest extends NabTestBase {
 
   @Override
   protected NabApplication getApplication() {
-    return NabApplication.builder().configureJersey().registerResources(ExampleResource.class).bindToRoot().build();
+    return NabApplication.builder().configureJersey().registerResources(TodoResource.class).bindToRoot().build();
   }
 }

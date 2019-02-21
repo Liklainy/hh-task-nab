@@ -1,4 +1,4 @@
-package ru.hh.nab.example;
+package ru.hh.nab.todo;
 
 import java.util.function.Function;
 import javax.inject.Inject;
@@ -11,8 +11,8 @@ import javax.ws.rs.core.Response;
 
 import static org.junit.Assert.assertEquals;
 
-@ContextConfiguration(classes = ExampleTestConfig.class)
-public class ExampleServerAwareBeanTest extends NabTestBase {
+@ContextConfiguration(classes = TodoTestConfig.class)
+public class TodoServerAwareBeanTest extends NabTestBase {
 
   @Inject
   private Function<String, String> serverPortAwareBean;
@@ -27,6 +27,6 @@ public class ExampleServerAwareBeanTest extends NabTestBase {
 
   @Override
   protected NabApplication getApplication() {
-    return NabApplication.builder().configureJersey().registerResources(ExampleResource.class).bindToRoot().build();
+    return NabApplication.builder().configureJersey().registerResources(TodoResource.class).bindToRoot().build();
   }
 }
