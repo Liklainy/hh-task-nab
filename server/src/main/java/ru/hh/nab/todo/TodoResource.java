@@ -1,6 +1,6 @@
 package ru.hh.nab.todo;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
@@ -16,36 +16,37 @@ import javax.ws.rs.core.MediaType;
 @Path("/todo")
 public class TodoResource {
   
+  private List<TodoDto> todos = new ArrayList<TodoDto>();
+  private int id = 0;
+
   @GET
   @Produces(MediaType.APPLICATION_JSON)
   public List<TodoDto> getTodo() {
-    TodoDto todo = new TodoDto();
-    todo.setId(1);
-    todo.setTitle("Hello World!");
-    todo.setCompleted(true);
-    return Arrays.asList(todo);
+    return todos;
   }
 
   @PUT
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
-  public TodoDto addTodo(TodoDto todo) {
-    todo.setId(1);
+  public TodoDto putTodo(TodoDto todo) {
+    todo.setId(++id);
+    todos.add(todo);
     return todo;
   }
 
   @POST
   @Path("/{id}")
   @Consumes(MediaType.APPLICATION_JSON)
-  public void updateTodo(@PathParam("id") int id, TodoDto todo) {
-    
+  public TodoDto updateTodo(@PathParam("id") int id, TodoDto todo) {
+    todos.replaceAll(x -> x.getId() == id ? todo : x);
+    return todo;
   }
 
   @DELETE
   @Path("/{id}")
   @Consumes(MediaType.APPLICATION_JSON)
-  public void updateTodo(@PathParam("id") int id) {
-    
+  public void deleteTodo(@PathParam("id") int id) {
+    todos.removeIf(x -> x.getId() == id);
   }
 
 }

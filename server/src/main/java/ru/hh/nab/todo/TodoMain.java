@@ -21,9 +21,9 @@ public class TodoMain {
   {
     // Client static resources
     ServletHolder clientHolder = new ServletHolder("client", DefaultServlet.class);
-    clientHolder.setInitParameter("resourceBase", "../client");
+    clientHolder.setInitParameter("resourceBase", "../client/dist/todomvc");
     clientHolder.setInitParameter("dirAllowed", "true");
     clientHolder.setInitParameter("pathInfoOnly", "true");
-    webContext.addServlet(clientHolder, "/client/*");
+    webContext.addServlet(clientHolder, "/*");
   }
 }

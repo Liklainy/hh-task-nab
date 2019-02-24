@@ -1,5 +1,7 @@
+import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { Injectable } from '@angular/core';
-import {Http, Response} from "@angular/http";
+import { Observable, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 import { Todo } from '../shared/models/todo.model';
 
 @Injectable({
@@ -7,59 +9,53 @@ import { Todo } from '../shared/models/todo.model';
 })
 export class TodoService {
 
-  constructor(private http: Http) { }
+  readonly API_URL = '/api';
 
-// Placeholder for last id so we can simulate
-  // automatic incrementing of id's
-  lastId: number = 0;
+  constructor(private http: HttpClient) { }
 
-  // Placeholder for todo's
-  todos: Todo[] = [];
+  addTodo(todo: Todo): Observable<Todo> {
+    return this.http
+      .put<Todo>(this.API_URL + `/todo`, todo)
+      .pipe(catchError(this.handleError));
+  }
 
-  // Simulate POST /todos
-  addTodo(todo: Todo): TodoService {
-    if (!todo.id) {
-      todo.id = ++this.lastId;
+  deleteTodoById(id: number): Observable<Object> {
+    return this.http
+      .delete(this.API_URL + `/todo/${id}`)
+      .pipe(catchError(this.handleError));
+  }
+
+  updateTodo(todo: Todo): Observable<Todo> {
+    return this.http
+      .post<Todo>(this.API_URL + `/todo/${todo.id}`, todo)
+      .pipe(catchError(this.handleError));
+  }
+
+  getAllTodos(): Observable<Todo[]> {
+    return this.http
+      .get<Todo[]>(this.API_URL + '/todo')
+      .pipe(catchError(this.handleError));
+  }
+
+  getTodoById(id: number): Observable<Todo> {
+    return this.http
+      .get<Todo>(this.API_URL + `/todo/${id}`)
+      .pipe(catchError(this.handleError));
+  }
+
+  private handleError(error: HttpErrorResponse) {
+    if (error.error instanceof ErrorEvent) {
+      // A client-side or network error occurred. Handle it accordingly.
+      console.error('An error occurred:', error.error.message);
+    } else {
+      // The backend returned an unsuccessful response code.
+      // The response body may contain clues as to what went wrong,
+      console.error(
+        `Backend returned code ${error.status}, ` +
+        `body was: ${error.error}`);
     }
-    this.todos.push(todo);
-    return this;
-  }
-
-  // Simulate DELETE /todos/:id
-  deleteTodoById(id: number): TodoService {
-    this.todos = this.todos
-      .filter(todo => todo.id !== id);
-    return this;
-  }
-
-  // Simulate PUT /todos/:id
-  updateTodoById(id: number, values: Object = {}): Todo {
-    let todo = this.getTodoById(id);
-    if (!todo) {
-      return null;
-    }
-    Object.assign(todo, values);
-    return todo;
-  }
-
-  // Simulate GET /todos
-  getAllTodos(): Todo[] {
-    return this.todos;
-  }
-
-  // Simulate GET /todos/:id
-  getTodoById(id: number): Todo {
-    return this.todos
-      .filter(todo => todo.id === id)
-      .pop();
-  }
-
-  // Toggle todo complete
-  toggleTodoComplete(todo: Todo){
-    let updatedTodo = this.updateTodoById(todo.id, {
-      complete: !todo.complete
-    });
-    return updatedTodo;
-  }
-
+    // return an observable with a user-facing error message
+    return throwError(
+      'Something bad happened; please try again later.');
+  };
 }

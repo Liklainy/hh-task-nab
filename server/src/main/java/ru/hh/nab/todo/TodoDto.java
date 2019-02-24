@@ -3,7 +3,7 @@ package ru.hh.nab.todo;
 public class TodoDto {
     private int id;
     private String title;
-    private boolean completed;
+    private boolean complete;
 
     public int getId() {
         return id;
@@ -21,11 +21,11 @@ public class TodoDto {
         this.title = title;
     }
 
-    public boolean getCompleted() {
-        return completed;
+    public boolean getComplete() {
+        return complete;
     }
 
-    public void setCompleted(boolean completed) {
-        this.completed = completed;
+    public void setComplete(boolean complete) {
+        this.complete = complete;
     }
 }
