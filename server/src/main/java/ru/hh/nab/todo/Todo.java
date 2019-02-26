@@ -1,9 +1,27 @@
 package ru.hh.nab.todo;
 
-public class TodoDto {
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "todo")
+public class Todo {
+
+    @Id
+    @Column(name = "todo_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    @Column(name = "title")
     private String title;
+    @Column(name = "complete")
     private boolean complete;
+
+    public Todo() {
+    }
 
     public Integer getId() {
         return id;

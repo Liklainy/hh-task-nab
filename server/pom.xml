@@ -17,6 +17,16 @@
         </dependency>
         <dependency>
             <groupId>ru.hh.nab</groupId>
+            <artifactId>nab-hibernate</artifactId>
+            <version>4.15.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-hikaricp</artifactId>
+            <version>5.2.10.Final</version>
+        </dependency>
+        <dependency>
+            <groupId>ru.hh.nab</groupId>
             <artifactId>nab-testbase</artifactId>
             <version>4.15.1</version>
             <scope>test</scope>
