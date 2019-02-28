@@ -1,23 +1,23 @@
 package ru.hh.nab.todo;
 
-import javax.sql.DataSource;
-
 import org.hibernate.SessionFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
-
+import org.springframework.jmx.export.MBeanExporter;
 import ru.hh.nab.common.properties.FileSettings;
 import ru.hh.nab.datasource.DataSourceFactory;
+import ru.hh.nab.datasource.DataSourceType;
 import ru.hh.nab.hibernate.MappingConfig;
 import ru.hh.nab.hibernate.NabHibernateProdConfig;
-import ru.hh.nab.hibernate.transaction.DataSourceContextTransactionManager;
 import ru.hh.nab.starter.NabProdConfig;
+
+import javax.sql.DataSource;
 
 @Configuration
 @Import({
-    NabProdConfig.class,
-    NabHibernateProdConfig.class
+        NabHibernateProdConfig.class,
+        NabProdConfig.class
 })
 public class TodoConfig {
 
@@ -29,13 +29,15 @@ public class TodoConfig {
     }
 
     @Bean
-    DataSource dataSource(DataSourceFactory dsFactory, FileSettings fileSettings) {
-        return dsFactory.create("dataSource", false, fileSettings);
+    DataSource dataSource(DataSourceFactory dataSourceFactory, FileSettings fileSettings, MBeanExporter mBeanExporter) {
+        String name = new Object(){}.getClass().getEnclosingMethod().getName();
+        mBeanExporter.addExcludedBean(name); // TODO: JMX issue
+        return dataSourceFactory.create(DataSourceType.MASTER, false, fileSettings);
     }
 
     @Bean
-    TodoDao todoDao(SessionFactory sessionFactory, DataSourceContextTransactionManager transactionManager) {
-        return new TodoDao(sessionFactory, transactionManager);
+    TodoDao todoDao(SessionFactory sessionFactory) {
+        return new TodoDao(sessionFactory);
     }
 
     @Bean
