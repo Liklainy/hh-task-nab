@@ -112,7 +112,6 @@
                 <configuration>
                     <systemPropertyVariables>
                         <settingsDir>${basedir}/src/etc/nab-todo</settingsDir>
-                        <argLine>--illegal-access=permit</argLine>
                     </systemPropertyVariables>
                 </configuration>
             </plugin>
