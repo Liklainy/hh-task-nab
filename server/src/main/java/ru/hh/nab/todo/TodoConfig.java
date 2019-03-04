@@ -29,9 +29,7 @@ public class TodoConfig {
     }
 
     @Bean
-    DataSource dataSource(DataSourceFactory dataSourceFactory, FileSettings fileSettings, MBeanExporter mBeanExporter) {
-        String name = new Object(){}.getClass().getEnclosingMethod().getName();
-        mBeanExporter.addExcludedBean(name); // TODO: JMX issue
+    DataSource dataSource(DataSourceFactory dataSourceFactory, FileSettings fileSettings) {
         return dataSourceFactory.create(DataSourceType.MASTER, false, fileSettings);
     }
 
